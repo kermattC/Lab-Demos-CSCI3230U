@@ -18,9 +18,7 @@ $(document).ready(function() {
             for (let i = 0; i < lines.length; i++){
                 console.log(lines[i])
             }
-            
         }
-
     });
 
     /*
@@ -44,11 +42,11 @@ $(document).ready(function() {
             "translate(" + margin.left + "," + margin.top + ")");
 
     var data =  [
-        {student: 'first', grade: 80},
-        {student: 'second', grade: 40},
-        {student: 'third', grade: 100},
-        {student: 'fourth', grade: 75},
-        {student: 'fifth', grade: 10},
+        {student: 'student0', grade: 80},
+        {student: 'student1', grade: 40},
+        {student: 'student2', grade: 100},
+        {student: 'student3', grade: 75},
+        {student: 'student4', grade: 10},
     ]
 
     // create x-axis
@@ -70,11 +68,13 @@ $(document).ready(function() {
     svg.append("g")
         .call(d3.axisLeft(y))
 
+    var barNumber = 0
     // create bars
     svg.selectAll("bar")
         .data(data) // .data() needs to be before .enter()
         .enter()
         .append("rect")
+            .attr('id', function(d) {return d.student})
             .attr('x', function(d) {return x(d.student) + 18;})
             .attr('y', function(d) {return y(d.grade)})
             .attr('width', 25)
@@ -82,36 +82,49 @@ $(document).ready(function() {
             .attr("fill", "#1c408c")
             // demo purposes - adding an on click function to show how you can change the size of bars
             .on("click", function(bar) {
+            
+            // perform string splitting on the ID to get the respective number to the bar
+            var temp = String(this.id)
+            var barID = temp.split('student')[1]
 
+            // new preset data. This is supposed to simulate when you select new data that you want to display
             newData = [
-                {student: 'first', grade: 20},
-                {student: 'second', grade: 30},
-                {student: 'third', grade: 60},
-                {student: 'fourth', grade: 90},
-                {student: 'fifth', grade: 100},
+                {student: 'student0', grade: 20},
+                {student: 'student1', grade: 30},
+                {student: 'student2', grade: 60},
+                {student: 'student3', grade: 90},
+                {student: 'student4', grade: 100},
             ]
 
-            // the 'bar' variable is passed into the function upon clicking the bar with its respective context. ie: if I click on the first bar, 'bar' equal to the details in the first index of the 'data' array
-            barName = bar.student
-    
-            // not the best way to find which bar corresponds to which index, but it works for this demo
-            var barNumber;
-            if (barName == 'first'){
-                barNumber = 0;
-            } else if (barName == 'second'){
-                barNumber = 1;
-            } else if (barName == 'third'){
-                barNumber = 2;
-            } else if (barName == 'fourth'){
-                barNumber = 3;
-            } else if (barName == 'fifth'){
-                barNumber = 4;
-            }
-
-            // console.log(newData[barNumber].grade);
-
             // using d3.select, we can now update the values. Basically uses the same technique as the bars earlier (lines 51 and 53) but the syntax is a little different
-            d3.select(this).attr("y", y(newData[barNumber].grade));
-            d3.select(this).attr("height", height  - y(newData[barNumber].grade));
+            d3.select(this).attr("y", y(newData[parseInt(barID)].grade));
+            d3.select(this).attr("height", height  - y(newData[parseInt(barID)].grade));
+
+            /*
+                Old code: Not the ideal way to change the bar according to their respective bar number. But I'll just keep it in here in case
+            */
+            // // the 'bar' variable is passed into the function upon clicking the bar with its respective context. ie: if I click on the first bar, 'bar' equal to the details in the first index of the 'data' array
+            // barName = bar.student
+            // // console.log(barName)
+    
+            // // not the best way to find which bar corresponds to which index, but it works for this demo
+            // var barNumber;
+            
+            // if (barName == 'first'){
+            //     barNumber = 0;
+            // } else if (barName == 'second'){
+            //     barNumber = 1;
+            // } else if (barName == 'third'){
+            //     barNumber = 2;
+            // } else if (barName == 'fourth'){
+            //     barNumber = 3;
+            // } else if (barName == 'fifth'){
+            //     barNumber = 4;
+            // }
+
+
+            // d3.select(this).attr("y", y(newData[barNumber].grade));
+            // d3.select(this).attr("height", height  - y(newData[barNumber].grade));
+
             });
 });
