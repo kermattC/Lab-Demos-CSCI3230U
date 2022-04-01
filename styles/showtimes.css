@@ -1,0 +1,57 @@
+a {
+   color: black;
+}
+
+a:hover {
+   text-decoration: underline;
+}
+
+.vertical-spacing {
+   margin: 2rem;
+}
+
+.centre {
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.form-spacing {
+   margin-left: 1rem;
+}
+
+.label-spacing {
+   margin-top: 0.25rem;
+}
+
+#movieImage, #movieDetails {
+   display: none;
+}
+
+#movieImage img {
+   width: 150px;
+}
+
+#movieDetails textarea {
+   resize: none;
+}
+
+#Rating img {
+   margin-right: 0.5rem;
+}
+
+.trophy {
+   width: 32px;
+}
+
+#location, #date, #time, #title, #quantity {
+   width: 300px;
+}
+
+#spacing-left {
+   margin-top: 1rem;
+   margin-left: 1rem;
+}
+
+.buyButton {
+   margin-left: 1rem;
+}
